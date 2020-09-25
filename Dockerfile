@@ -21,6 +21,7 @@ RUN /opt/steamcmd/steamcmd.sh \
 
 RUN cp /opt/steamcmd/linux64/steamclient.so /opt/avorion/
 
+RUN mkdir -p /opt/avorion/universe
 VOLUME /opt/avorion/universe
 
 EXPOSE 27000 27000/udp
