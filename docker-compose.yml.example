@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  avorion:
+    build: .
+    restart: always
+    volumes:
+     - ./data:/data
+    ports:
+     - 27000:27000
+     - 27000:27000/udp
+     - 27003:27003
+     - 27003:27003/udp
+     - 27020:27020
+     - 27020:27020/udp
+     - 27021:27021
+     - 27021:27021/udp
+    environment:
+     - ADMIN=1234567 # your steamid64
+     - GALAXY_NAME=galaxy
