@@ -2,8 +2,7 @@ FROM ubuntu:latest
 LABEL maintainer="f0rkz@f0rkznet.net"
 
 ENV SERVER_ADMIN 0
-
-WORKDIR /opt
+ENV GALAXY_NAME galaxy
 
 RUN apt-get update -yq && apt-get -yq install wget lib32gcc1 tar
 
@@ -21,13 +20,11 @@ RUN /opt/steamcmd/steamcmd.sh \
 
 RUN cp /opt/steamcmd/linux64/steamclient.so /opt/avorion/
 
-RUN mkdir -p /opt/avorion/universe
-VOLUME /opt/avorion/universe
+VOLUME /data
 
 EXPOSE 27000 27000/udp
 EXPOSE 27003 27003/udp
 EXPOSE 27020 27020/udp
 EXPOSE 27021 27020/udp
 
-
-CMD /opt/avorion/server.sh --galaxy-name universe --admin $SERVER_ADMIN --datapath /opt/avorion/universe
+CMD /opt/avorion/server.sh --galaxy-name $GALAXY_NAME --admin $SERVER_ADMIN --datapath /data
