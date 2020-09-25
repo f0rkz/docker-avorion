@@ -27,4 +27,4 @@ EXPOSE 27003 27003/udp
 EXPOSE 27020 27020/udp
 EXPOSE 27021 27020/udp
 
-CMD /opt/avorion/server.sh --galaxy-name $GALAXY_NAME --admin $SERVER_ADMIN --datapath /data
+CMD /opt/avorion/server.sh --use-steam-networking 1 --galaxy-name $GALAXY_NAME --admin $SERVER_ADMIN --datapath /data
