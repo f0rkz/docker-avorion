@@ -2,10 +2,11 @@ version: '3'
 
 services:
   avorion:
-    build: .
+    image: ghcr.io/f0rkz/docker-avorion:latest
     restart: always
     volumes:
      - ./data:/data
+     - ./server.ini:/data/avorion/save/galaxy/server.ini
     ports:
      - 27000:27000
      - 27000:27000/udp
