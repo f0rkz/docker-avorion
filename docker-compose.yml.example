@@ -1,22 +1,25 @@
-version: '3'
-
 services:
   avorion:
-    image: ghcr.io/f0rkz/docker-avorion:latest
-    restart: always
-    volumes:
-     - ./data:/data
-     # Be sure to update this save path with the value of GALAXY_NAME
-     - ./server.ini:/data/avorion/save/galaxy/server.ini
-    ports:
-     - 27000:27000
-     - 27000:27000/udp
-     - 27003:27003
-     - 27003:27003/udp
-     - 27020:27020
-     - 27020:27020/udp
-     - 27021:27021
-     - 27021:27021/udp
+    image: ghcr.io/f0rkz/docker-avorion:1
+    restart: unless-stopped
+    stop_grace_period: 2m
     environment:
-     - ADMIN=1234567 # your steamid64
-     - GALAXY_NAME=galaxy
+      ALLOWED_CLIENT_MODS: "${ALLOWED_CLIENT_MODS:-}"
+      FORCE_ENABLE_MODS: "${FORCE_ENABLE_MODS:-false}"
+      GALAXY_NAME: "${GALAXY_NAME:-}"
+      SERVER_ADMIN: "${SERVER_ADMIN:-0}"
+      STEAMCMD_RETRIES: "${STEAMCMD_RETRIES:-3}"
+      STEAMCMD_VALIDATE: "${STEAMCMD_VALIDATE:-false}"
+      WORKSHOP_MODS: "${WORKSHOP_MODS:-}"
+    volumes:
+      # Create this directory and make it writable by UID/GID 1000 first.
+      - ./data:/data
+    ports:
+      - "27000:27000/tcp"
+      - "27000:27000/udp"
+      - "27003:27003/tcp"
+      - "27003:27003/udp"
+      - "27020:27020/tcp"
+      - "27020:27020/udp"
+      - "27021:27021/tcp"
+      - "27021:27021/udp"

@@ -1,42 +1,34 @@
 .DEFAULT_GOAL := help
-PACKAGE_NAME ?= avorion_docker
-ADMIN := "0"
-GALAXY_NAME := "galaxy"
+
+IMAGE_NAME ?= docker-avorion
+
+.PHONY: build down help logs run start stop
 
 help:
-	@echo "This Makefile will create an Avorion dedicated server"
-	@echo ""
+	@echo "Avorion dedicated server"
+	@echo
 	@echo "Targets:"
-	@echo "  build    Builds the docker container"
-	@echo "  run      Builds and runs the docker container"
-	@echo "  rm       Removes the container"
-	@echo "  start    Starts the server"
-	@echo "  stop     Stops the server"
-	@echo ""
+	@echo "  build  Build the local image"
+	@echo "  run    Build and start the server"
+	@echo "  logs   Follow server logs"
+	@echo "  start  Start the existing server"
+	@echo "  stop   Stop the server gracefully"
+	@echo "  down   Remove the container and network (preserves data)"
 
 build:
-	@docker build . -t avorion_docker:latest
+	docker build --tag "$(IMAGE_NAME):latest" .
 
-rm:
-	@docker rm avorion_docker
+run:
+	docker compose up --detach --build
 
-run: build
-	docker run -it -d --restart always --name "avorion_docker" \
-		-e SERVER_ADMIN=$(ADMIN) \
-		-e GALAXY_NAME=$(GALAXY_NAME) \
-		-v $(CURDIR)/data:/data \
-		-p 27000:27000 \
-		-p 27000:27000/udp \
-		-p 27003:27003 \
-		-p 27003:27003/udp \
-		-p 27020:27020 \
-		-p 27020:27020/udp \
-		-p 27021:27021 \
-		-p 27021:27021/udp \
-		avorion_docker:latest
+logs:
+	docker compose logs --follow avorion
 
 start:
-	@docker start avorion_docker
+	docker compose start avorion
 
 stop:
-	@docker stop avorion_docker
+	docker compose stop avorion
+
+down:
+	docker compose down
