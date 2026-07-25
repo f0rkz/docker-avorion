@@ -1,0 +1,8 @@
+.git
+.github
+.agents
+.codex
+.releaserc.json
+*.md
+LICENSE
+data

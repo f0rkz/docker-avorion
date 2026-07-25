@@ -1,0 +1,12 @@
+modLocation = ""
+forceEnabling = false
+
+-- Server-side Workshop mods. Avorion downloads and updates these automatically.
+mods = {
+    {workshopid = "WORKSHOP_ITEM_ID"},
+}
+
+-- Client-side mods permitted when connecting to this galaxy.
+allowed = {
+    {id = "WORKSHOP_ITEM_ID"},
+}
